@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def SGD(TrainedNet, data, labels, dataval, labelsval, lr, momentum, batchsize, gamma=0, epochs=20, plot=False,
-        plotProgress=False):
+        plotProgress=False,f=""):
     stat_train_acc = []
     stat_train_loss = []
     stat_val_acc = []
@@ -36,14 +36,16 @@ def SGD(TrainedNet, data, labels, dataval, labelsval, lr, momentum, batchsize, g
             TrainedNet.update(lr, momentum, gamma)
 
             train_acc = train_acc + np.sum(outlabel == np.argmax(batchlabel, axis=0))
-            train_loss = train_loss + loss
+            train_loss = train_loss + loss*batchdata.shape[1]
 
         stat_train_acc.append(train_acc / m)
         stat_train_loss.append(train_loss / m)
 
         lossv, outlabelv = TrainedNet.forward(dataval, labelsval)
-        stat_val_acc.append(np.mean(outlabelv == labelsval))
-        stat_val_loss.append(lossv / mv)
+
+
+        stat_val_acc.append(np.mean(outlabelv == np.argmax(labelsval, axis=0)))
+        stat_val_loss.append(lossv )
         print(np.max(gradback))
         if plotProgress:
             pmatnotneeded, outlabeltoplot = TrainedNet.forward(X_n)
@@ -57,7 +59,10 @@ def SGD(TrainedNet, data, labels, dataval, labelsval, lr, momentum, batchsize, g
         title = "Accuracy"
         plt.title(title)
         plt.legend()
-        plt.show()
+        filename = title + f + '.png'
+        plt.savefig(filename, bbox_inches='tight')
+        plt.close()
+
 
         plt.plot(stat_train_loss, label="train")
         plt.plot(stat_val_loss, label="val")
@@ -65,4 +70,7 @@ def SGD(TrainedNet, data, labels, dataval, labelsval, lr, momentum, batchsize, g
         plt.title(title)
         plt.legend()
         plt.show()
+        filename = title + f + '.png'
+        plt.savefig(filename, bbox_inches='tight')
+        plt.close()
     return stat_train_acc, stat_val_acc, stat_train_loss, stat_val_loss

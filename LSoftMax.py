@@ -34,7 +34,7 @@ class SoftMax(Layer):
         # self.gradient is (chan_in+1,chan_out)
         # return is (chan_in,samples)
         S = G.shape[1]
-        gradient = self.Xb.dot(G.T)
+        gradient = self.Xb.dot(G.T)/S
 
         self.gradients = [gradient]
 
@@ -42,4 +42,4 @@ class SoftMax(Layer):
         # self.jacobian=sparse.kron(W,np.eye(S))
 
         # return np.reshape(self.jacobian.dot(G.ravel()), (self.IN,S))/S
-        return W.dot(G)
+        return W.dot(G)/S

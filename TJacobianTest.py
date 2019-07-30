@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def JacobianTest(Layer, X, JacMV):
+def JacobianTest(Layer, X, JacMV,f):
     x_out = Layer.forward(X)
 
     epsilons = np.geomspace(1 / 1000000, 1 / 100, num=50)
@@ -27,4 +27,6 @@ def JacobianTest(Layer, X, JacMV):
     plt.title(title)
     #   plt.yticks(np.arange(min(diff_ratio), max(diff_ratio), 0.1))
     plt.legend()
-    plt.show()
+    filename = title + f + '.png'
+    plt.savefig(filename, bbox_inches='tight')
+    plt.close()

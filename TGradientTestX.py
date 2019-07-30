@@ -32,3 +32,4 @@ def GradientTestX(testedNet, X, labels,f):
     plt.legend()
     filename = title + f + '.png'
     plt.savefig(filename, bbox_inches='tight')
+    plt.close()

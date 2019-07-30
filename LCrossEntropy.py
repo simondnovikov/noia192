@@ -7,7 +7,7 @@ class crossentropy(LossFunction):
         # labels is (classes,samples)
         # return (classes,samples)
         S = pmat.shape[1]
-        loss = -np.sum(np.multiply(np.log(pmat + 0.0000001), labels)) / S
+        loss = -np.sum(np.multiply(np.log(pmat + 0.0000000001), labels))/S
 
         return loss
 
@@ -16,4 +16,4 @@ class crossentropy(LossFunction):
         # X is (classes,samples)
         # labels is (classes,samples)
         # return (classes,samples)
-        return (pmat - labels) / S
+        return (pmat - labels)
