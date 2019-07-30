@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def GradientTestX(testedNet, X, labels):
+def GradientTestX(testedNet, X, labels,f):
     loss, outlabel = testedNet.forward(X, labels)
     gradient = testedNet.backward()
 
@@ -30,4 +30,5 @@ def GradientTestX(testedNet, X, labels):
     plt.title(title)
     #   plt.yticks(np.arange(min(diff_ratio), max(diff_ratio), 0.1))
     plt.legend()
-    plt.show()
+    filename = title + f + '.png'
+    plt.savefig(filename, bbox_inches='tight')
